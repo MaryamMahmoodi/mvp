@@ -12,7 +12,6 @@ This project is a simple URL shortener API built with offering basic functionali
 6. [Swagger Documentation](#swagger-documentation)
 7. [Dockerization](#dockerization)
 8. [How to Run](#how-to-run)
-9. [Future Improvements](#future-improvements)
 
 ## Technologies Used
 
@@ -58,33 +57,43 @@ Unit tests are written using **JUnit 5** to ensure the correctness of the servic
 - **URL shortening and resolving**: Ensuring that the API can shorten URLs and resolve them correctly.
 - **Exception handling**: Verifying that custom exceptions are thrown and handled appropriately.
 
-## Swagger Documentation
+## How to Run
 
-Swagger is used to document and test the API endpoints. You can access the Swagger UI by navigating to:
-```http://localhost:8080/swagger-ui/index.html```
-
-
-## Dockerization
+### 1. Clone the repository:
+```bash
+git clone https://github.com/MaryamMahmoodi/mvp.git
+cd mvp
+```
+### 2. Build the Docker Image
 The application is using **Docker**. The `Dockerfile` is located in the root directory and defines the steps to build a Docker image for the application.
-
-### Building the Docker Image
 
 ```bash
 docker build -t mvp-app .
 ```
-###Running the Docker Container
-This will run the application inside a Docker container, exposing it on port 8080.
+### 3. Run the Docker Container
+
 ```bash
 docker run -p 8080:8080 mvp-app
 ```
 
-## How to Run
+### 4. Access the Application
+#### Swagger Documentation
 
-### Clone the repository:
+Swagger is used to document and test the API endpoints. You can access the Swagger UI by navigating to:
+```http://localhost:8080/swagger-ui/index.html```
+
+## Testing the Application
+   You can test the application using Swagger UI or Postman:
+
+#### Using Swagger UI
+Navigate to http://localhost:8080/swagger-ui.html.
+Use the available endpoints to test URL shortening and resolution.
+#### Using Postman
+- Shorten URL: Send a POST request to ```http://localhost:8080/api/url/shorten``` with the request body containing a JSON object,
+e.g., {"url": "https://www.example.com"}.
+
+- Resolve URL: Send a GET request to ```http://localhost:8080/api/url/{shortCode}```, replacing {shortCode} with the actual short code received from the shorten URL response.
+#### Running Tests (Optional)
 ```bash
-git clone https://github.com/MaryamMahmoodi/mvp.git
-```
-### Build the project: 
-```bash
-mvn clean install
+./mvnw test
 ```
