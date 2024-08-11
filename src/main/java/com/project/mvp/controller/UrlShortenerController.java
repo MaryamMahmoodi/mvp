@@ -7,6 +7,7 @@ import com.project.mvp.model.exception.UrlNotFoundException;
 import com.project.mvp.model.service.imp.UrlShortenerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class UrlShortenerController
     @Operation(summary = "Create a shortened URL")
     @ApiResponse(responseCode = "201", description = "URL shortened successfully")
     @PostMapping("/shorten")
-    public ResponseEntity<UrlResponse> createShortenedUrl(@RequestBody UrlRequest urlRequest)
+    public ResponseEntity<UrlResponse> createShortenedUrl(@Valid @RequestBody UrlRequest urlRequest)
     {
         Url createdUrl = service.createShortenedUrl(urlRequest.getOriginalUrl());
         UrlResponse urlResponse = new UrlResponse(createdUrl.getShortCode());
