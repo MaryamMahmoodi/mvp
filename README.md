@@ -100,6 +100,8 @@ You can access the Swagger UI by navigating to its url which has been explained 
 #### Using Swagger UI
 Navigate to http://localhost:8080/swagger-ui.html.
 Use the available endpoints to test URL shortening and resolution.
+- POST request: with the request body containing a JSON object, e.g., {"url": "https://www.example.com"}
+- GET request: replacing {shortCode} with the actual short code received from the POST request response.
 #### Using Postman
 - Shorten URL: Send a POST request to ```http://localhost:8080/api/url/shorten``` with the request body containing a JSON object,
 e.g., {"url": "https://www.example.com"}.
