@@ -26,6 +26,8 @@ This project is a simple URL shortener API built with offering basic functionali
 - **Docker**: To containerize the application for easy deployment and scalability.
 - **Jackson ObjectMapper**: For JSON parsing in tests.
 - **Lombok**: Used to reduce code by generating getters, setters, constructors at compile time.
+- **Spring Data JPA**: For interacting with the database and managing persistence.
+- **Validation**: Implemented using Hibernate Validator and JSR 380 annotations to ensure data integrity.
 
 
 ## Project Structure
