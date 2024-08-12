@@ -9,9 +9,10 @@ This project is a simple URL shortener API built with offering basic functionali
 3. [API Endpoints](#api-endpoints)
 4. [Exception Handling](#exception-handling)
 5. [Unit Testing](#unit-testing)
-6. [How to Run](#how-to-run)
-7. [Dockerization](#dockerization)
+6. [Dockerization](#dockerization)
+7. [How to Run](#how-to-run)
 8. [Swagger Documentation](#swagger-documentation)
+9. [Testing the Application](#testing-the-application)
 
 
 ## Technologies Used
@@ -33,7 +34,7 @@ The project is organized into several packages:
 
 - **controller**: Contains the REST controllers that handle incoming HTTP requests.
 - **model**: Contains the entity classes and DTOs.
-   - **entity**: Defines the `Url` entity class.
+   - **entity**: Defines the `Url` entity class with added validation annotations to ensure that the data validation before being persisted.
    - **dto**: Define a DTO that represents the structure of the JSON payload expected by the API.
    - **exception**: Custom exception classes and their handlers.
    - **service**: Contains service layer logic.
@@ -51,16 +52,17 @@ The project is organized into several packages:
 Custom exceptions are used to handle specific errors such as:
 
 - **UrlNotFoundException**: Thrown when a URL with a given shortcode does not exist in the database.
-- **DuplicateUrlException**: Thrown when an attempt is made to shorten a URL that has already been shortened.
+- **GlobalExceptionHandler**: A centralized class to handle all exceptions that occur during API requests and returns appropriate HTTP response codes
 
-These exceptions are caught and handled by a global exception handler, which returns appropriate HTTP status codes and messages.
 
 ## Unit Testing
 
 Unit tests are written using **JUnit 5** to ensure the correctness of the service and controller layers. The tests cover:
 
 - **URL shortening and resolving**: Ensuring that the API can shorten URLs and resolve them correctly.
-- **Exception handling**: Verifying that custom exceptions are thrown and handled appropriately.
+
+## Dockerization
+The application is containerized using **Docker**. The `Dockerfile` is located in the root directory and defines the steps to build a Docker image for the application.
 
 ## How to Run
 
@@ -69,23 +71,25 @@ Unit tests are written using **JUnit 5** to ensure the correctness of the servic
 git clone https://github.com/MaryamMahmoodi/mvp.git
 cd mvp
 ```
-### 2. Dockerization
-#### Build the Docker Image
-The application is using **Docker**. The `Dockerfile` is located in the root directory and defines the steps to build a Docker image for the application.
-
+### 2. Build the Docker Image
 ```bash
 docker build -t mvp-app .
 ```
-#### Run the Docker Container
+### 3. Run the Docker Container
 
 ```bash
 docker run -p 8080:8080 mvp-app
 ```
 
+### 4. Access the Application
+- Swagger UI: Open your browser and navigate to
+  ```http://localhost:8080/swagger-ui/index.html``` to access the Swagger interface for testing the API endpoints.
+
 ## Swagger Documentation
 
-Swagger is used to document and test the API endpoints. You can access the Swagger UI by navigating to:
-```http://localhost:8080/swagger-ui/index.html```
+Swagger is used to document and test the API endpoints.
+You can access the Swagger UI by navigating to its url which has been explained in the "Access the Application" section.
+
 
 ## Testing the Application
    You can test the application using Swagger UI or Postman:
@@ -98,7 +102,7 @@ Use the available endpoints to test URL shortening and resolution.
 e.g., {"url": "https://www.example.com"}.
 
 - Resolve URL: Send a GET request to ```http://localhost:8080/api/url/{shortCode}```, replacing {shortCode} with the actual short code received from the shorten URL response.
-#### Running Tests (Optional)
+#### Running Tests
 ```bash
 ./mvnw test
 ```
