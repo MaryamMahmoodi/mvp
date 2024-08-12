@@ -9,9 +9,10 @@ This project is a simple URL shortener API built with offering basic functionali
 3. [API Endpoints](#api-endpoints)
 4. [Exception Handling](#exception-handling)
 5. [Unit Testing](#unit-testing)
-6. [Swagger Documentation](#swagger-documentation)
+6. [How to Run](#how-to-run)
 7. [Dockerization](#dockerization)
-8. [How to Run](#how-to-run)
+8. [Swagger Documentation](#swagger-documentation)
+
 
 ## Technologies Used
 
@@ -23,6 +24,8 @@ This project is a simple URL shortener API built with offering basic functionali
 - **JUnit 5**: For writing and running unit tests.
 - **Docker**: To containerize the application for easy deployment and scalability.
 - **Jackson ObjectMapper**: For JSON parsing in tests.
+- **Lombok**: Used to reduce code by generating getters, setters, constructors at compile time.
+
 
 ## Project Structure
 
@@ -31,10 +34,12 @@ The project is organized into several packages:
 - **controller**: Contains the REST controllers that handle incoming HTTP requests.
 - **model**: Contains the entity classes and DTOs.
    - **entity**: Defines the `Url` entity class.
+   - **dto**: Define a DTO that represents the structure of the JSON payload expected by the API.
+   - **exception**: Custom exception classes and their handlers.
    - **service**: Contains service layer logic.
       - **contract**: Contains service interfaces and repository interfaces.
       - **imp**: Contains implementations of service interfaces.
-      - **exception**: Custom exception classes and their handlers.
+   - **MvpApplication** main class.
 
 ## API Endpoints
 
@@ -64,20 +69,20 @@ Unit tests are written using **JUnit 5** to ensure the correctness of the servic
 git clone https://github.com/MaryamMahmoodi/mvp.git
 cd mvp
 ```
-### 2. Build the Docker Image
+### 2. Dockerization
+#### Build the Docker Image
 The application is using **Docker**. The `Dockerfile` is located in the root directory and defines the steps to build a Docker image for the application.
 
 ```bash
 docker build -t mvp-app .
 ```
-### 3. Run the Docker Container
+#### Run the Docker Container
 
 ```bash
 docker run -p 8080:8080 mvp-app
 ```
 
-### 4. Access the Application
-#### Swagger Documentation
+## Swagger Documentation
 
 Swagger is used to document and test the API endpoints. You can access the Swagger UI by navigating to:
 ```http://localhost:8080/swagger-ui/index.html```
