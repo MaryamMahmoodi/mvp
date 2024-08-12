@@ -11,8 +11,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UrlServiceTest
@@ -61,4 +60,60 @@ public class UrlServiceTest
         repository.deleteAll();
 
     }
+
+
+    //Test for URL Not Found Handling (HTTP 404 Not Found)
+    @Test
+    public void testResolveUrl_NotFound()
+    {
+        String nonExistentShortCode = "nonexistent";
+
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:" + port + "/api/url/" + nonExistentShortCode, String.class);
+
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+
+        // Check if the body is null, as 404 responses often don't include a body
+        String responseBody = responseEntity.getBody();
+        if (responseBody != null)
+        {
+            assertTrue(responseBody.contains("URL not found"));
+        }
+    }
+
+    //Test for Invalid Input Handling (HTTP 400 Bad Request)
+    @Test
+    public void testCreateShortenedUrl_InvalidInput()
+    {
+        String invalidUrl = "";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        String requestBody = "{\"url\": \"" + invalidUrl + "\"}";
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:" + port + "/api/url/shorten", requestEntity, String.class);
+
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+        assertTrue(responseEntity.getBody().contains("Invalid URL"));
+    }
+
+    //Test for Null Input Handling (HTTP 400 Bad Request)
+    @Test
+    public void testCreateShortenedUrl_NullInput()
+    {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        String requestBody = "{\"url\": null}";
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:" + port + "/api/url/shorten", requestEntity, String.class);
+
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+        assertTrue(responseEntity.getBody().contains("Invalid URL"));
+    }
+
+
 }

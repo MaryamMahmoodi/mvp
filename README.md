@@ -60,6 +60,7 @@ Custom exceptions are used to handle specific errors such as:
 Unit tests are written using **JUnit 5** to ensure the correctness of the service and controller layers. The tests cover:
 
 - **URL shortening and resolving**: Ensuring that the API can shorten URLs and resolve them correctly.
+- **Exception handling**: Verifying that custom exceptions are thrown and handled appropriately.
 
 ## Dockerization
 The application is containerized using **Docker**. The `Dockerfile` is located in the root directory and defines the steps to build a Docker image for the application.
